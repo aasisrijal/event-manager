@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 
 const graphSchema = require('./graphql/schema/index');
 const graphResolvers = require('./graphql/resolvers/index');
+const isAuth = require('./middleware/isAuth');
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
-
+app.use(isAuth);
 
 
 //connect to db
@@ -34,4 +35,5 @@ app.use(
   })
 );
 
-app.listen(3000);
+const port = 3000
+app.listen(port, ()=> console.log(`server is running in ${port}`));
