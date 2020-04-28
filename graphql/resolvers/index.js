@@ -109,14 +109,14 @@ module.exports = {
       	description: args.eventInput.description,
       	price: +args.eventInput.price,
       	date: new Date(args.eventInput.date),
-            creator: req.userId
+        creator: req.userId
     });
     let eventCreated;
     try {
     	const result = await event.save(); 
       	
         eventCreated =  transformEvent(result);
-        const creator = await User.findById();
+        const creator = await User.findById(req.userId);
     
         
         if(!creator) {
@@ -186,7 +186,7 @@ module.exports = {
     }
       const fetchedEvent = await Event.findOne({_id: args.eventId})
       const booking = new Booking ({
-        user: "5e64c42ef305521c4f1910f8",
+        user: req.userId,
         event: fetchedEvent
       });
       const result = await booking.save();
